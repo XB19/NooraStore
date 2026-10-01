@@ -1,0 +1,14 @@
+<section class="cats" id="tissus">
+  <div class="wrap">
+    <div class="shead"><div><span class="kicker">Nos univers</span><h2>Trois familles, un seul atelier</h2></div></div>
+    <div class="cat-grid">
+      {% for category in top_categories %}
+      <a class="cat-card" id="{{ category.slug }}" href="{{ category.get_absolute_url }}">
+        {% if category.image %}<img src="{{ category.image.url }}" alt="{{ category.name }}">{% endif %}
+        <div class="shade"></div>
+        <div class="content"><h3>{{ category.name }}</h3><span class="count">{{ category.product_count }} article{{ category.product_count|pluralize }}</span></div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

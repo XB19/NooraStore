@@ -1,0 +1,62 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Commande #{{ order.id }} — Espace gestion{% endblock %}
+
+{% block content %}
+<div class="ap-topbar">
+  <div><span class="ap-kicker">Commandes</span><h1>Commande #{{ order.id }}</h1></div>
+  <a href="{% url 'admin_panel:order-list' %}" class="btn btn-outline">← Retour à la liste</a>
+</div>
+
+<div class="ap-detail-grid">
+  <div class="ap-panel">
+    <h2>Articles commandés</h2>
+    <div class="ap-table-wrap" style="margin-bottom:0;">
+      <table class="ap-table">
+        <thead><tr><th>Produit</th><th>Prix unitaire</th><th>Qté</th><th>Sous-total</th></tr></thead>
+        <tbody>
+          {% for item in order.items.all %}
+          <tr>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.unit_price }} F</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.subtotal }} F</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex; justify-content:flex-end; padding-top:16px; font-size:16px; font-weight:700;">
+      Total : {{ order.total }} F
+    </div>
+  </div>
+
+  <div>
+    <div class="ap-panel">
+      <h2>Client</h2>
+      <div class="ap-kv"><span>Nom</span><span>{{ order.full_name }}</span></div>
+      <div class="ap-kv"><span>Téléphone</span><span>{{ order.phone }}</span></div>
+      <div class="ap-kv"><span>Adresse</span><span>{{ order.address }}</span></div>
+      <div class="ap-kv"><span>Compte</span><span>{{ order.user.username }}</span></div>
+      <div class="ap-kv"><span>Paiement</span><span>{{ order.get_payment_method_display }}</span></div>
+      <div class="ap-kv"><span>Passée le</span><span>{{ order.created_at|date:"d/m/Y à H:i" }}</span></div>
+      <div style="margin-top:12px; display:flex; gap:10px;">
+        <a href="tel:{{ order.phone }}" class="btn btn-outline" style="flex:1; justify-content:center; font-size:12.5px; padding:9px;">Appeler</a>
+        <a href="https://wa.me/{{ order.phone|cut:'+'|cut:' ' }}" target="_blank" rel="noopener" class="btn btn-outline" style="flex:1; justify-content:center; font-size:12.5px; padding:9px;">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="ap-panel">
+      <h2>Statut</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="field">
+          <label for="{{ form.status.id_for_label }}">Statut de la commande</label>
+          {{ form.status }}
+        </div>
+        <button type="submit" class="btn btn-dark" style="width:100%;">Mettre à jour</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

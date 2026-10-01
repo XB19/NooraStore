@@ -1,0 +1,37 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Catégories — Espace gestion{% endblock %}
+
+{% block content %}
+<div class="ap-topbar">
+  <div><span class="ap-kicker">Catalogue</span><h1>Catégories</h1></div>
+  <a href="{% url 'admin_panel:category-create' %}" class="btn btn-dark">+ Nouvelle catégorie</a>
+</div>
+
+<div class="ap-table-wrap">
+  <table class="ap-table">
+    <thead><tr><th>Catégorie</th><th>Parente</th><th>Slug</th><th>Articles</th><th></th></tr></thead>
+    <tbody>
+      {% for c in categories %}
+      <tr>
+        <td style="display:flex; align-items:center; gap:12px;">
+          {% if c.image %}<img class="ap-thumb" src="{{ c.image.url }}" alt="">{% else %}<span class="ap-empty-thumb"></span>{% endif %}
+          <b>{{ c.name }}</b>
+        </td>
+        <td>{{ c.parent.name|default:"—" }}</td>
+        <td><span class="ap-pill">{{ c.slug }}</span></td>
+        <td>{{ c.product_count }}</td>
+        <td>
+          <div class="ap-actions">
+            <a href="{% url 'admin_panel:category-edit' c.pk %}">Modifier</a>
+            <a href="{% url 'admin_panel:category-delete' c.pk %}" class="danger">Supprimer</a>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="ap-empty">Aucune catégorie pour le moment.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

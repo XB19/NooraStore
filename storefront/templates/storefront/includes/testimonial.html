@@ -1,0 +1,76 @@
+{% load static %}
+<section class="quote">
+  <div class="wrap">
+    <div class="quote-slider">
+      <div class="quote-slide is-active">
+        <div class="quote-avatar"><img src="{% static 'storefront/img/femme-portrait.jpg' %}" alt="Cliente Noora Store"></div>
+        <blockquote>« On a commandé un bazin brodé un mardi, payé par Flooz, livré le jeudi. Simple comme discuter sur WhatsApp. »</blockquote>
+        <cite>— Une cliente de Noora Store, Lomé</cite>
+      </div>
+      <div class="quote-slide">
+        <div class="quote-avatar"><img src="{% static 'storefront/img/testimonial-homme-1.jpg' %}" alt="Client Noora Store"></div>
+        <blockquote>« J'ai commandé une chemise wax pour un mariage, la coupe était parfaite du premier coup. Le suivi de commande m'a rassuré jusqu'à la livraison. »</blockquote>
+        <cite>— Un client de Noora Store, Lomé</cite>
+      </div>
+      <div class="quote-slide">
+        <div class="quote-avatar"><img src="{% static 'storefront/img/testimonial-femme-1.jpg' %}" alt="Cliente Noora Store"></div>
+        <blockquote>« Le pagne batik reçu était encore plus beau qu'en photo. Le paiement par T-Money a pris moins d'une minute. »</blockquote>
+        <cite>— Une cliente de Noora Store, Kara</cite>
+      </div>
+      <div class="quote-slide">
+        <div class="quote-avatar"><img src="{% static 'storefront/img/testimonial-homme-2.jpg' %}" alt="Client Noora Store"></div>
+        <blockquote>« Le grand boubou en bazin riche commandé pour la fête de fin d'année a été livré à temps, avec une broderie soignée. »</blockquote>
+        <cite>— Un client de Noora Store, Sokodé</cite>
+      </div>
+      <div class="quote-slide">
+        <div class="quote-avatar"><img src="{% static 'storefront/img/testimonial-femme-2.jpg' %}" alt="Cliente Noora Store"></div>
+        <blockquote>« J'adore pouvoir suivre ma commande en temps réel. La carte virtuelle Noora rend le paiement encore plus simple. »</blockquote>
+        <cite>— Une cliente de Noora Store, Kpalimé</cite>
+      </div>
+
+      <div class="quote-nav">
+        <button type="button" class="quote-arrow quote-prev" aria-label="Témoignage précédent">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="quote-dots">
+          <button type="button" class="quote-dot is-active" data-index="0" aria-label="Témoignage 1"></button>
+          <button type="button" class="quote-dot" data-index="1" aria-label="Témoignage 2"></button>
+          <button type="button" class="quote-dot" data-index="2" aria-label="Témoignage 3"></button>
+          <button type="button" class="quote-dot" data-index="3" aria-label="Témoignage 4"></button>
+          <button type="button" class="quote-dot" data-index="4" aria-label="Témoignage 5"></button>
+        </div>
+        <button type="button" class="quote-arrow quote-next" aria-label="Témoignage suivant">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var slider = document.querySelector('.quote-slider');
+  if (!slider) return;
+  var slides = slider.querySelectorAll('.quote-slide');
+  var dots = slider.querySelectorAll('.quote-dot');
+  var idx = 0;
+  var timer;
+
+  function show(i){
+    idx = (i + slides.length) % slides.length;
+    slides.forEach(function(s, si){ s.classList.toggle('is-active', si === idx); });
+    dots.forEach(function(d, di){ d.classList.toggle('is-active', di === idx); });
+  }
+
+  function restart(){
+    clearInterval(timer);
+    timer = setInterval(function(){ show(idx + 1); }, 6000);
+  }
+
+  slider.querySelector('.quote-next').addEventListener('click', function(){ show(idx + 1); restart(); });
+  slider.querySelector('.quote-prev').addEventListener('click', function(){ show(idx - 1); restart(); });
+  dots.forEach(function(d, di){ d.addEventListener('click', function(){ show(di); restart(); }); });
+
+  restart();
+})();
+</script>

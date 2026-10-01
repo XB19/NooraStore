@@ -1,0 +1,55 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Commandes — Espace gestion{% endblock %}
+
+{% block content %}
+<div class="ap-topbar">
+  <div><span class="ap-kicker">Ventes</span><h1>Commandes</h1><div class="sub">{{ orders|length }} commande{{ orders|length|pluralize }}</div></div>
+</div>
+
+<div class="ap-toolbar">
+  <div class="ap-filters">
+    <a href="{% url 'admin_panel:order-list' %}" class="{% if not current_status %}is-active{% endif %}">Toutes</a>
+    {% for value, label in status_choices %}
+    <a href="?statut={{ value }}" class="{% if current_status == value %}is-active{% endif %}">{{ label }}</a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="ap-table-wrap">
+  <table class="ap-table">
+    <thead><tr><th>Commande</th><th>Client</th><th>Téléphone</th><th>Paiement</th><th>Statut</th><th>Total</th><th>Date</th><th></th></tr></thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td><a href="{% url 'admin_panel:order-detail' order.pk %}" style="font-weight:600;">#{{ order.id }}</a></td>
+        <td>{{ order.full_name }}</td>
+        <td>{{ order.phone }}</td>
+        <td>{{ order.get_payment_method_display }}</td>
+        <td>
+          <form method="post" action="{% url 'admin_panel:order-detail' order.pk %}" class="ap-status-form">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <select name="status" class="order-status order-status-{{ order.status }}" onchange="this.form.submit()">
+              {% for value, label in status_choices %}
+              <option value="{{ value }}" {% if value == order.status %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </td>
+        <td>{{ order.total }} F</td>
+        <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+        <td>
+          <div class="ap-actions">
+            <a href="{% url 'admin_panel:order-detail' order.pk %}">Voir</a>
+            <a href="https://wa.me/{{ order.phone|cut:'+'|cut:' ' }}" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="8" class="ap-empty">Aucune commande pour le moment.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

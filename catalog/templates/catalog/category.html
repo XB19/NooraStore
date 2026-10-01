@@ -1,0 +1,33 @@
+{% extends "storefront/base.html" %}
+
+{% block title %}{{ title }} — Noora Store{% endblock %}
+
+{% block content %}
+<section class="cathead">
+  <div class="wrap">
+    <div class="crumb">
+      <a href="{% url 'storefront:home' %}">Accueil</a>
+      {% for c in crumb %}
+        <span class="sep">/</span>
+        {% if c.url %}<a href="{% url c.url c.arg %}">{{ c.label }}</a>{% else %}<span>{{ c.label }}</span>{% endif %}
+      {% endfor %}
+    </div>
+    <h1>{{ title }}</h1>
+    <span class="count">{{ products|length }} article{{ products|length|pluralize }}</span>
+  </div>
+</section>
+
+<section class="products">
+  <div class="wrap">
+    {% if products %}
+    <div class="pgrid">
+      {% for p in products %}
+        {% include "catalog/includes/product_card.html" %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <p style="color:var(--ink-soft);">Aucun article ici pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

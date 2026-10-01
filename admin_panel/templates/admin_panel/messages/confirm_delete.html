@@ -1,0 +1,18 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Supprimer le message de {{ message_obj.name }} — Espace gestion{% endblock %}
+
+{% block content %}
+<div class="ap-topbar">
+  <div><span class="ap-kicker">Messages</span><h1>Supprimer un message</h1></div>
+</div>
+
+<div class="ap-panel" style="max-width:520px;">
+  <p style="margin-bottom:20px;">Êtes-vous sûr de vouloir supprimer le message de <b>« {{ message_obj.name }} »</b> ({{ message_obj.subject|default:"sans sujet" }}) ? Cette action est définitive.</p>
+  <form method="post" style="display:flex; gap:12px;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-dark" style="background:var(--rust);">Supprimer définitivement</button>
+    <a href="{% url 'admin_panel:message-list' %}" class="btn btn-outline">Annuler</a>
+  </form>
+</div>
+{% endblock %}

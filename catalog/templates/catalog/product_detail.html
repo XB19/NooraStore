@@ -1,0 +1,91 @@
+{% extends "storefront/base.html" %}
+
+{% block title %}{{ product.name }} — Noora Store{% endblock %}
+
+{% block content %}
+<section class="cathead">
+  <div class="wrap">
+    <div class="crumb">
+      <a href="{% url 'storefront:home' %}">Accueil</a>
+      {% for c in crumb %}
+        <span class="sep">/</span>
+        {% if c.url %}<a href="{% url c.url c.arg %}">{{ c.label }}</a>{% else %}<span>{{ c.label }}</span>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="pdetail">
+  <div class="wrap pd-grid">
+    <div class="pd-gallery">
+      <div class="pd-main">
+        {% with first_img=product.images.all|first %}
+        <img id="pd-main-img" src="{% if first_img %}{{ first_img.image.url }}{% endif %}" alt="{{ product.name }}">
+        {% endwith %}
+        {% if product.badge %}<span class="pbadge">{{ product.badge }}</span>{% endif %}
+      </div>
+      {% if product.images.all|length > 1 %}
+      <div class="pd-thumbs">
+        {% for img in product.images.all %}
+        <button type="button" class="pd-thumb{% if forloop.first %} is-active{% endif %}" data-full="{{ img.image.url }}" onclick="noorSwapImage(this)">
+          <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}">
+        </button>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="pd-info">
+      <div class="pcat">{{ product.category.name }}</div>
+      <h1>{{ product.name }}</h1>
+      <div class="pd-price">
+        {% if product.old_price %}<span class="pold">{{ product.old_price }} F</span>{% endif %}{{ product.price }} F
+      </div>
+      {% if product.price_per_meter %}<div class="pd-sqm">Soit environ {{ product.price_per_meter }} F/m · pièce de {{ product.length_m }} m</div>{% endif %}
+      {% if product.description %}<p class="pd-desc">{{ product.description|linebreaksbr }}</p>{% endif %}
+
+      <form method="post" action="{% url 'cart:add' product.slug %}" class="pd-actions">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button type="submit" class="btn btn-dark">Ajouter au panier</button>
+      </form>
+
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'catalog:toggle-favorite' product.slug %}" class="pd-actions">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button type="submit" class="btn btn-outline">
+          {% if is_favorite %}♥ Retirer des favoris{% else %}♡ Ajouter aux favoris{% endif %}
+        </button>
+      </form>
+      {% else %}
+      <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-outline">Se connecter pour ajouter aux favoris</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if related %}
+<section class="products">
+  <div class="wrap">
+    <div class="shead"><div><span class="kicker">Vous aimerez aussi</span><h2>Produits similaires</h2></div></div>
+    <div class="pgrid">
+      {% for p in related %}
+        {% include "catalog/includes/product_card.html" %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<script>
+function noorSwapImage(btn){
+  var main = document.getElementById('pd-main-img');
+  main.src = btn.getAttribute('data-full');
+  document.querySelectorAll('.pd-thumb').forEach(function(el){ el.classList.remove('is-active'); });
+  btn.classList.add('is-active');
+}
+</script>
+{% endblock %}

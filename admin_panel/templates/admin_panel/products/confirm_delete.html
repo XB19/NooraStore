@@ -1,0 +1,18 @@
+{% extends "admin_panel/base.html" %}
+
+{% block title %}Supprimer {{ product.name }} — Espace gestion{% endblock %}
+
+{% block content %}
+<div class="ap-topbar">
+  <div><span class="ap-kicker">Produits</span><h1>Supprimer un produit</h1></div>
+</div>
+
+<div class="ap-panel" style="max-width:520px;">
+  <p style="margin-bottom:20px;">Êtes-vous sûr de vouloir supprimer <b>« {{ product.name }} »</b> ? Cette action est définitive et retirera aussi ses photos et son historique de favoris.</p>
+  <form method="post" style="display:flex; gap:12px;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-dark" style="background:var(--rust);">Supprimer définitivement</button>
+    <a href="{% url 'admin_panel:product-list' %}" class="btn btn-outline">Annuler</a>
+  </form>
+</div>
+{% endblock %}

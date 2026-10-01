@@ -1,0 +1,104 @@
+/* Espace gestion — réutilise les variables et composants de style.css (couleurs,
+   polices, .btn, .field) pour rester visuellement identique au site public. */
+
+.ap-shell{display:flex; min-height:100vh; align-items:stretch;}
+
+/* ---------- sidebar ---------- */
+.ap-sidebar{width:240px; flex-shrink:0; background:var(--ink); color:var(--paper); display:flex; flex-direction:column; position:sticky; top:0; height:100vh;}
+.ap-sidebar .brand{display:block; padding:22px 24px 18px; border-bottom:1px solid rgba(246,241,230,.14);}
+.ap-sidebar .brand .n{font-family:'Newsreader',serif; font-size:22px; font-weight:500;}
+.ap-sidebar .brand .n i{font-style:italic; color:var(--ochre);}
+.ap-sidebar .brand small{display:block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; opacity:.6; margin-top:8px;}
+.ap-brand-logo{height:52px;}
+.ap-nav{flex:1; padding:16px 0;}
+.ap-nav a{display:flex; align-items:center; gap:11px; padding:11px 24px; font-size:13.5px; color:rgba(246,241,230,.72); border-left:3px solid transparent;}
+.ap-nav a:hover{color:var(--paper); background:rgba(255,255,255,.05);}
+.ap-nav a.is-active{color:var(--paper); background:rgba(255,255,255,.08); border-left-color:var(--rust);}
+.ap-nav a .icon{width:16px; height:16px;}
+.ap-nav .ap-count{margin-left:auto; background:var(--rust); color:#fff; font-size:10px; font-family:'Space Mono',monospace; border-radius:20px; padding:1px 7px;}
+.ap-sidebar-foot{padding:18px 24px; border-top:1px solid rgba(246,241,230,.14);}
+.ap-sidebar-foot a{font-size:12.5px; color:rgba(246,241,230,.65); display:block; margin-bottom:8px;}
+.ap-sidebar-foot a:hover{color:var(--paper);}
+.ap-sidebar-foot button{background:none; border:none; padding:0; font-family:inherit; font-size:12.5px; color:rgba(246,241,230,.65); cursor:pointer;}
+.ap-sidebar-foot button:hover{color:var(--paper);}
+
+/* ---------- main ---------- */
+.ap-main{flex:1; padding:34px 42px 60px; min-width:0;}
+.ap-topbar{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:28px; gap:16px; flex-wrap:wrap;}
+.ap-topbar h1{font-family:'Newsreader',serif; font-size:28px; font-weight:500;}
+.ap-topbar .ap-kicker{font-family:'Space Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--rust-2); display:block; margin-bottom:6px;}
+.ap-topbar .sub{font-size:13px; color:var(--ink-soft); margin-top:4px;}
+
+/* ---------- stat cards ---------- */
+.ap-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:38px;}
+.ap-stat{background:#fff; border:1px solid var(--line); border-radius:var(--r-md); padding:20px;}
+.ap-stat .num{font-family:'Newsreader',serif; font-size:28px; font-weight:500; color:var(--rust);}
+.ap-stat .lab{font-size:12px; color:var(--ink-soft); margin-top:4px;}
+
+/* ---------- panels ---------- */
+.ap-panel{background:#fff; border:1px solid var(--line); border-radius:var(--r-md); padding:26px; margin-bottom:28px;}
+.ap-panel h2{font-family:'Newsreader',serif; font-size:19px; font-weight:500; margin-bottom:16px;}
+
+/* ---------- tables ---------- */
+.ap-table-wrap{background:#fff; border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden;}
+.ap-table{width:100%; border-collapse:collapse;}
+.ap-table th{text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); background:var(--paper-2); padding:11px 16px; font-weight:600;}
+.ap-table td{padding:11px 16px; border-top:1px solid var(--line); font-size:13.5px; vertical-align:middle;}
+.ap-table tr:hover td{background:var(--paper-2);}
+.ap-table .ap-thumb{width:40px; height:40px; border-radius:4px; object-fit:cover; display:block; background:var(--paper-2);}
+.ap-table .ap-empty-thumb{width:40px; height:40px; border-radius:4px; background:var(--paper-2); border:1px dashed var(--line);}
+.ap-actions{display:flex; gap:14px;}
+.ap-actions a, .ap-actions button{font-size:12.5px; font-weight:600; background:none; border:none; padding:0; font-family:inherit; cursor:pointer; color:var(--ink);}
+.ap-actions a:hover, .ap-actions button:hover{color:var(--rust-2);}
+.ap-actions .danger:hover{color:var(--rust);}
+.ap-empty{padding:40px 20px; text-align:center; color:var(--ink-soft); font-size:13.5px;}
+
+/* ---------- inline status quick-update select (orders list) ---------- */
+.ap-status-form select.order-status{-webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer; font-family:'Space Mono',monospace;}
+.ap-status-form select.order-status:hover{filter:brightness(.97);}
+
+/* ---------- badges / pills ---------- */
+.ap-pill{font-size:10.5px; font-family:'Space Mono',monospace; padding:3px 9px; border-radius:20px; border:1px solid var(--line); background:var(--paper-2); display:inline-block;}
+.ap-pill-on{background:#eaf4ec; border-color:#3f7a4f; color:#2c5636;}
+.ap-pill-off{background:#fbe9e2; border-color:var(--rust); color:var(--rust-2);}
+.ap-pill-featured{background:#fdf3e2; border-color:var(--ochre); color:#8a6a1f;}
+
+/* ---------- filters / toolbar ---------- */
+.ap-toolbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:14px; flex-wrap:wrap;}
+.ap-filters{display:flex; gap:8px; flex-wrap:wrap;}
+.ap-filters a{font-size:12.5px; padding:6px 13px; border-radius:20px; border:1px solid var(--line); color:var(--ink-soft);}
+.ap-filters a.is-active{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+
+/* ---------- forms ---------- */
+.ap-form-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 20px;}
+.ap-form-grid .field-full{grid-column:1 / -1;}
+.ap-checkline{display:flex; align-items:center; gap:8px; margin-bottom:16px;}
+.ap-checkline input{width:auto;}
+.ap-checkline label{margin-bottom:0; font-size:13px; font-weight:500;}
+.ap-form-actions{display:flex; gap:12px; margin-top:8px;}
+
+/* ---------- image gallery formset ---------- */
+.ap-imgrow{display:flex; align-items:center; gap:14px; padding:12px; border:1px solid var(--line); border-radius:var(--r-sm); margin-bottom:10px;}
+.ap-imgrow img{width:52px; height:52px; object-fit:cover; border-radius:4px; flex-shrink:0;}
+.ap-imgrow .ap-imgfields{flex:1; display:grid; grid-template-columns:2fr 1fr 90px; gap:10px;}
+.ap-imgrow .ap-imgfields input{border:1px solid var(--line); border-radius:var(--r-sm); padding:8px 10px; font-size:12.5px; font-family:inherit;}
+.ap-imgrow .ap-imgdelete{font-size:11px; color:var(--ink-soft); display:flex; align-items:center; gap:5px; white-space:nowrap;}
+
+/* ---------- order / message detail ---------- */
+.ap-detail-grid{display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:start;}
+.ap-kv{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px dashed var(--line); font-size:13px;}
+.ap-kv:last-child{border-bottom:none;}
+.ap-kv span:first-child{color:var(--ink-soft);}
+
+@media(max-width:1080px){
+  .ap-shell{flex-direction:column;}
+  .ap-sidebar{width:100%; height:auto; position:static; flex-direction:row; align-items:center; overflow-x:auto;}
+  .ap-nav{display:flex; padding:0;}
+  .ap-nav a{border-left:none; border-bottom:3px solid transparent; white-space:nowrap;}
+  .ap-nav a.is-active{border-left:none; border-bottom-color:var(--rust);}
+  .ap-sidebar-foot{display:none;}
+  .ap-stats{grid-template-columns:1fr 1fr;}
+  .ap-form-grid{grid-template-columns:1fr;}
+  .ap-detail-grid{grid-template-columns:1fr;}
+  .ap-main{padding:24px 20px 50px;}
+}

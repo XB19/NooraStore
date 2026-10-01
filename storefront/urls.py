@@ -1,0 +1,10 @@
+from django.urls import path
+
+from . import views
+
+app_name = "storefront"
+
+urlpatterns = [
+    path("", views.HomeView.as_view(), name="home"),
+    path("contact/envoyer/", views.contact_submit, name="contact-submit"),
+]
